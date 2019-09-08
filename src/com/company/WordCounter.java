@@ -62,7 +62,15 @@ public class WordCounter {
         }
     }
 
+    private void createOutputDirectory(){
+        File directory = new File("output");
+        if (!directory.exists()){
+            directory.mkdir();
+        }
+    }
+
     private void writeExclusionsToFile() throws Exception{
+        createOutputDirectory();
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream( "output/encounteredExcludedWords.txt"), StandardCharsets.UTF_8))) {
             for(Map.Entry<String, Integer> exclusion : exclusions.entrySet()){
@@ -73,6 +81,7 @@ public class WordCounter {
 
 
     private void writeOccurrencesToFiles() throws Exception{
+        createOutputDirectory();
         for (Map.Entry<Character, Map<String, Integer>> letterOccurrence : occurrences.entrySet()){
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream( "output/" + Character.toUpperCase(letterOccurrence.getKey()) + ".txt"), StandardCharsets.UTF_8))) {
